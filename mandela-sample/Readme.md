@@ -8,11 +8,11 @@ Start the server:
 
 Start the client:
 
-`npx parcel src/sample.html --open`
+`yarn start sample.html --open`
 
 
 ## About dependencies:
 
 Depends on the packages: `mandela-node` and `mandela-js-client`
-The two are currently linked in node_modules using npm link
+The two are currently linked in node_modules using yarn link
 
