@@ -1,0 +1,17 @@
+{
+  "name": "mandela-js-client",
+  "version": "0.1.0",
+  "description": "Browser client for Mandela-Js",
+  "source": "index.js",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abhishek Yadav",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  }
+}

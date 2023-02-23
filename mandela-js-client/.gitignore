@@ -1,0 +1,10 @@
+
+node_modules
+dist
+coverage
+tmp
+
+.parcel-cache
+
+yarn-error.log
+
