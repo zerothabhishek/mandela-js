@@ -1,0 +1,27 @@
+
+# Other projects
+mandela-js
+mandela-ruby
+mandela-s-vite
+ws-examples
+
+# node_modules folders
+*/node_modules
+
+# dist folders
+*/dist
+
+# tmp folders
+tmp
+*/tmp
+
+# parcel cache
+*/.parcel-cache
+
+# coverage reports
+*/coverage
+
+# notes files
+notes.md
+notes1.txt
+
