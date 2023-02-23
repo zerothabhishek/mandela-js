@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Mandela JS</title>
+  </head>
+  <style>
+    section#data {
+      background-color: pink;
+      padding: 0.5em;
+      height: 6em;
+      overflow-y: scroll;
+    }
+  </style>
+  <body>
+    <h3>Mandela Js</h3>
+
+    <section>
+      <button id="connect">Subscribe</button>
+      <span id="connection-status">⚪️</span>
+      <br />
+      <br />
+      <button id="unsubscribe" disabled>UnSubscribe</button>
+    </section>
+
+    <section style="margin-top: 1em">
+      <textarea id="msg-to-send"></textarea>
+      <br /><br />
+      <button id="send-msg" disabled>Send a message</button>
+    </section>
+
+    <h4>Data received</h4>
+    <section id="data"></section>
+    <script src="src/sample.js" type="module"></script>
+  </body>
+</html>
