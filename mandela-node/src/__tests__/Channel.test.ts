@@ -7,7 +7,7 @@ const MyChannel = {
 }
 
 beforeEach(() => {
-  setupChannelRegistry([MyChannel])
+  // setupChannelRegistry([MyChannel])
 })
 
 describe('Channel constructor', () => {

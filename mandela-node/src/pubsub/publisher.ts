@@ -5,7 +5,9 @@ export default class PubSubPublisher {
   redisclient: RedisClientType;
 
   constructor() {
-    this.redisclient = createClient();
+    // redis[s]://[[username][:password]@][host][:port][/db-number]
+    const url = process.env.REDIS_URL
+    this.redisclient = createClient({ url });
     this.redisclient.connect();
   }
 

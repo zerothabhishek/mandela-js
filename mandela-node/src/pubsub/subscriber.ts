@@ -6,7 +6,9 @@ export default class PubSubSubscriber {
   redisClient: RedisClientType;
 
   constructor() {
-    this.redisClient = createClient();
+    // redis[s]://[[username][:password]@][host][:port][/db-number]
+    const url = process.env.REDIS_URL
+    this.redisClient = createClient({ url });
     this.redisClient.connect();
   }
 

@@ -1,4 +1,7 @@
 
+## Mandela-js sample
+
+[Project Readme](https://github.com/zerothabhishek/mandela-js/blob/main/Readme.md)
 
 ## How to run:
 
