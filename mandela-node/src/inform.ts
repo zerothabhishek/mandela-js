@@ -26,6 +26,7 @@ export default function inform(data: string) {
     return;
   }
 
+  // TODO: This place can use some filtering logic defined in the Channel config
   const subs = findSubs(channel.key())
   if (!subs || subs.length === 0) {
     console.error("[inform] error: didn't find any connected subs")

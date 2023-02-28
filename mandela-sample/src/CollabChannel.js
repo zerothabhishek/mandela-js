@@ -20,6 +20,9 @@ export const CollabChannel = {
 
   // ,onmessage: async ({ data, subscription}) => {}
 
+  // TODO: api should give the session object as parameter
+  // Add a more practical, real-world way of authorizing
+  //
   ,authorize: async ({ sub }) => {
     const subscription = sub;
     if (!subscription) return null;
