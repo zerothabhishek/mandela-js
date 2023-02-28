@@ -19,7 +19,7 @@ export async function wsDemo() {
   const ch = "collab";
   const id = 123;
   const host = "localhost:9090"
-  const url = `ws://${host}?user_id=455&passcode=abc123`;
+  const url = `ws://${host}/_mandela?user_id=455&passcode=abc123`;
 
   function onSubscribe(sub) {
     connectionStatusEl.innerText = "🟢";

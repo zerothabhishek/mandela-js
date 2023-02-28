@@ -5,6 +5,7 @@ import { ChannelConfigType } from "./ChannelConfig";
 import { ChannelConfigRegistry } from "./ChannelConfigRegistry";
 import { Connection } from "./Connection";
 import { NodeServerType } from "./types";
+import { parse } from "url";
 
 export default class MandelaServer {
   wss: WebSocketServer;
@@ -34,10 +35,13 @@ export default class MandelaServer {
       "upgrade",
       (request: IncomingMessage, socket: internal.Duplex, head: Buffer) => {
         console.log("Upgrade request");
-        // TODO: authenticate here
-        this.wss.handleUpgrade(request, socket, head, (ws: WebSocket) => {
-          this.wss.emit("connection", ws, request);
-        });
+        const { pathname } = parse(request.url as string);
+
+        if (pathname === "/_mandela") {
+          this.wss.handleUpgrade(request, socket, head, (ws: WebSocket) => {
+            this.wss.emit("connection", ws, request);
+          });
+        }
       }
     );
   }
