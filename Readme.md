@@ -92,6 +92,6 @@ Please check the [docs for the client package](https://github.com/zerothabhishek
 
 ## A note on channel definition
 
-Channel instances in Mandela are defined by the channel-label and id pair (#random, 456). The idea being, several channel instances can have the same behavior (as defined in the channel-config), and all those instances will have the same label, but different ids. For example, the #random channel in one company's workspace is different from #random in another one. They work the same, but should be identified differently - using the ids.
+Channel instances in Mandela are defined by the label-id pairs, eg: `(#random, 456)`. The idea being, several instances of a certain channel kind (like `#random`) can exist, and they can be differentiated using the `id`. For example, the `#random` channel for one company is different from `#random` in another one. They behave the same, but should be identified differently - using the ids.
 
-These ids can be backed in the database, perhaps the primary key of the table that stores the room data. Database handling is out of scope here, so user is expected to do handle it separately.
+These ids can be backed in the database, perhaps as the primary key of the table that stores the room data.  

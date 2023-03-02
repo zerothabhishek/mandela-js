@@ -5,6 +5,19 @@
 
 ## How to run:
 
+Link the packages: `mandela-node` and `mandela-js-client` using yarn link:
+
+`cd ../mandela-node; yarn link`  
+`cd ../mandela-js-client; yarn link`  
+`cd ../mandela-sample`  
+
+`yarn link mandela-node`  
+`yarn link mandela-js-client`  
+
+Install the deps:
+
+`yarn install`
+
 Start the server:
 
 `node server.js`
@@ -14,8 +27,4 @@ Start the client:
 `yarn start sample.html --open`
 
 
-## About dependencies:
-
-Depends on the packages: `mandela-node` and `mandela-js-client`
-The two are currently linked in node_modules using yarn link
 
