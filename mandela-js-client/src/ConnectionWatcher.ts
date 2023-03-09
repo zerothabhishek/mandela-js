@@ -4,21 +4,23 @@ const WATCH_INTERVAL = 4000; // ms
 const RECONNECT_WAIT_INTERVAL = 6000;
 const ATTEMPT_LIMIT = 10;
 
-let timer = null;
-let attempts = 0;
+let timer: ReturnType<typeof setInterval>;
+let attempts: number = 0;
 
-function isInActive(connection) {
+function isInActive(connection: Connection): boolean {
   if (!connection.lastPingAt) return false;
 
   const now = new Date();
-  return now - connection.lastPingAt > RECONNECT_WAIT_INTERVAL;
+  const last = connection.lastPingAt;
+  if (!last) return false; // If we're unsure, we assume its active. So it doesn't overload with re-connections
+  return now.valueOf() - last.valueOf() > RECONNECT_WAIT_INTERVAL;
 }
 
-function isActive(connection) {
+function isActive(connection: Connection): boolean {
   return !isInActive(connection);
 }
 
-function tryReconnect(connection) {
+function tryReconnect(connection: Connection) {
   if (attempts > ATTEMPT_LIMIT) {
     console.log(
       "Connection inactive. Stopping attempts to reconnect,",
@@ -43,7 +45,7 @@ function tryReconnect(connection) {
   }
 }
 
-function checkAndReconnect(connection) {
+function checkAndReconnect(connection: Connection) {
   if (isActive(connection)) {
     return true;
   }
@@ -52,13 +54,13 @@ function checkAndReconnect(connection) {
   tryReconnect(connection);
 }
 
-function watch(connection) {
+function watch(connection: Connection) {
   timer = setInterval(() => {
     checkAndReconnect(connection);
   }, WATCH_INTERVAL);
 }
 
-function unwatch(_connection) {
+function unwatch(_connection: Connection) {
   clearTimeout(timer);
 }
 

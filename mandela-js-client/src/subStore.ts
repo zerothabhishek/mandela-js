@@ -1,19 +1,22 @@
+import { Channel } from "./channel";
+import { Subscription } from "./subscription";
+
 export class SubStore {
-  data;
+  data: Record<string, Subscription | undefined>;
 
   constructor() {
     this.data = {};
   }
 
-  add(sub) {
+  add(sub: Subscription) {
     this.data[sub.channel.key()] = sub;
   }
 
-  remove(sub) {
+  remove(sub: Subscription) {
     this.data[sub.channel.key()] = undefined;
   }
 
-  get(channel) {
+  get(channel: Channel) {
     return this.data[channel.key()];
   }
 

@@ -1,6 +1,10 @@
+import { Channel } from "./channel";
+import { Connection } from "./connection";
+import { MandelaData } from "./types";
+
 const SUB_TIMEOUT = 4000;
 
-function setSubTimeout(sub) {
+function setSubTimeout(sub: Subscription) {
   return setTimeout(() => {
     if (sub.isPending()) {
       sub.rejectFn("Subscription timed out");
@@ -8,15 +12,21 @@ function setSubTimeout(sub) {
   }, SUB_TIMEOUT);
 }
 
-export class Subscription {
-  channel;
-  connection;
-  status; // null, pending, active, closed
-  resolveFn;
-  rejectFn;
-  onMessageFn;
+type SubscriptionStatus = null | "pending" | "active" | "closed";
 
-  static async subscribe(channel, connection, { onMessage }) {
+export class Subscription {
+  channel: Channel;
+  connection: Connection;
+  status: SubscriptionStatus;
+  resolveFn: Function;
+  rejectFn: Function;
+  onMessageFn: Function;
+
+  static async subscribe(
+    channel: Channel,
+    connection: Connection,
+    { onMessage }: { onMessage: Function }
+  ) {
     return new Promise((resolve, reject) => {
       const sub = new Subscription(channel, connection, "pending");
       sub.resolveFn = resolve;
@@ -31,13 +41,17 @@ export class Subscription {
     });
   }
 
-  static async resubscibe(sub, newConn) {
+  static async resubscribe(sub: Subscription, newConn: Connection) {
     return await Subscription.subscribe(sub.channel, newConn, {
       onMessage: sub.onMessageFn,
     });
   }
 
-  constructor(channel, connection, status) {
+  constructor(
+    channel: Channel,
+    connection: Connection,
+    status: SubscriptionStatus
+  ) {
     this.channel = channel;
     this.connection = connection;
     this.status = status;
@@ -47,8 +61,8 @@ export class Subscription {
     return { ch: this.channel.label, id: this.channel.id };
   }
 
-  isPending() {
-    this.status === "pending";
+  isPending(): boolean {
+    return this.status === "pending";
   }
 
   requestSub() {
@@ -62,7 +76,7 @@ export class Subscription {
     this.resolveFn(this);
   }
 
-  onMessage(data) {
+  onMessage(data: MandelaData) {
     console.log("[Subscription onMessage]", data);
     this.onMessageFn(data.d, data);
   }
@@ -81,7 +95,7 @@ export class Subscription {
     this.connection.removeSub(this);
   }
 
-  sendMsg(str) {
+  sendMsg(str: string) {
     const payload = {
       m: { ...this.channelMeta, t: "data" },
       d: str,

@@ -2,4 +2,6 @@ export {
   subscribe,
   unSubscribe,
   debug
-} from './src/mandela.js'
+} from './src/mandela'
+
+export * from './src/types.d.ts'

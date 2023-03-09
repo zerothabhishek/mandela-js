@@ -2,7 +2,7 @@ import {
   subscribe,
   unSubscribe,
   debug,
-} from "../node_modules/mandela-js-client/dist/index.js";
+} from "../node_modules/mandela-js-client/index.js";
 
 window.M = debug();
 
@@ -36,7 +36,7 @@ export async function wsDemo() {
     unSubscribeButton.removeAttribute("disabled");
     unSubscribeButton.addEventListener("click", (event) => {
       event.preventDefault();
-      unSubscribe(sub, { onUnSubscribe });
+      unSubscribe({ sub, onUnSubscribe });
     });
   }
 
@@ -54,7 +54,7 @@ export async function wsDemo() {
   connectButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    const sub = await subscribe(url, ch, id, { onMessage });
+    const sub = await subscribe({ url, ch, id, onMessage });
     onSubscribe(sub);
   });
 }

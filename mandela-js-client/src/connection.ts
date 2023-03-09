@@ -1,9 +1,11 @@
-import { messageOnWebsocket } from "./messageOnWebsocket.js";
-import { SubStore } from "./subStore.js";
+import { Channel } from "./channel";
+import { messageOnWebsocket } from "./messageOnWebsocket";
+import { Subscription } from "./subscription";
+import { SubStore } from "./subStore";
 
 const CONNECTION_TIMEOUT = 2000;
 
-function setEventHandlers(conn) {
+function setEventHandlers(conn: Connection) {
   conn.ws.addEventListener("open", () => {
     conn.onOpen();
   });
@@ -22,7 +24,7 @@ function setEventHandlers(conn) {
   });
 }
 
-function setConnectionTimeout(conn) {
+function setConnectionTimeout(conn: Connection) {
   return setTimeout(() => {
     if (!conn.isConnected()) {
       conn.onConnectionTimeout();
@@ -31,14 +33,14 @@ function setConnectionTimeout(conn) {
 }
 
 export class Connection {
-  ws;
-  url;
-  subStore;
-  lastPingAt;
-  resolveFn;
-  rejectFn;
+  ws: WebSocket;
+  url: string;
+  subStore: SubStore;
+  lastPingAt: Date;
+  resolveFn: Function;
+  rejectFn: Function;
 
-  static build(url) {
+  static build(url: string): Promise<Connection> {
     return new Promise((resolve, reject) => {
       let ws = new WebSocket(url);
       let conn = new Connection(ws, url);
@@ -52,7 +54,7 @@ export class Connection {
     });
   }
 
-  static async reconnect(oldConn) {
+  static async reconnect(oldConn: Connection) {
     console.log("Reconnecting: ", oldConn);
     oldConn.close();
 
@@ -61,7 +63,7 @@ export class Connection {
     return conn;
   }
 
-  constructor(ws, url) {
+  constructor(ws: WebSocket, url: string) {
     this.ws = ws;
     this.url = url;
   }
@@ -80,16 +82,16 @@ export class Connection {
     return this.ws.readyState === 1;
   }
 
-  addSub(sub) {
+  addSub(sub: Subscription) {
     return this.subStore.add(sub);
   }
 
-  removeSub(sub) {
+  removeSub(sub: Subscription) {
     this.subStore.remove(sub);
     this.closeIfLonely();
   }
 
-  findSub(channel) {
+  findSub(channel: Channel) {
     return this.subStore.get(channel);
   }
 
@@ -99,7 +101,7 @@ export class Connection {
 
   resubscribeAll(oldSubs) {
     const thisConn = this;
-    oldSubs.forEach((sub) => {
+    oldSubs.forEach((sub: Subscription) => {
       Subscription.resubscribe(sub, thisConn);
     });
   }
@@ -126,7 +128,7 @@ export class Connection {
     // If it has been closed externally, don't clear the timer
   }
 
-  send(data) {
+  send(data: object) {
     this.ws.send(JSON.stringify(data));
   }
 }

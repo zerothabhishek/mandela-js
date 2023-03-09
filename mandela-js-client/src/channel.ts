@@ -1,8 +1,8 @@
 export class Channel {
-  label; // sometimes aliased as ch
-  id;
+  label: string; // sometimes aliased as ch
+  id: string;
 
-  constructor(label, id) {
+  constructor(label: string, id: string) {
     this.label = label;
     this.id = id;
   }
